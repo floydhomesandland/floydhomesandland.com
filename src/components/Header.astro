@@ -1,0 +1,134 @@
+---
+import { Image } from 'astro:assets';
+import mark from '../assets/brand/fhl-mark-gold.png';
+import { nav, site } from '../data/site';
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<header class="site-header on-dark">
+  <div class="wrap bar">
+    <a class="brand" href="/" aria-label={`${site.name}, home`}>
+      <Image src={mark} alt="" width={96} height={46} loading="eager" class="brand-mark" />
+      <span class="brand-name">Floyd Homes and Land</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Main">
+      <ul>
+        {nav.map((item) => (
+          <li class:list={{ 'has-sub': !!item.children }}>
+            <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a>
+            {item.children && (
+              <ul class="sub">
+                {item.children.map((c) => <li><a href={c.href} aria-current={path === c.href ? 'page' : undefined}>{c.label}</a></li>)}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <a class="call" href={`tel:${site.phone.tel}`}>
+        <span class="call-label">Call</span> <span class="call-number">{site.phone.display}</span>
+      </a>
+      <a class="btn btn--light start" href="/start/">Get started</a>
+    </div>
+
+    <details class="nav-mobile">
+      <summary><span class="sr-only">Open </span>Menu</summary>
+      <nav aria-label="Main">
+        <ul>
+          {nav.map((item) => (
+            <li>
+              <a href={item.href} class="top">{item.label}</a>
+              {item.children && (
+                <ul>
+                  {item.children.filter((c) => c.href !== item.href).map((c) => <li><a href={c.href}>{c.label}</a></li>)}
+                </ul>
+              )}
+            </li>
+          ))}
+          <li><a href="/memo/" class="top">Monthly memo</a></li>
+          <li><a href="/contact/" class="top">Contact</a></li>
+        </ul>
+        <a class="btn btn--light" href="/start/">Get started</a>
+        <p class="small muted">Call or text <span class="phone-plain">{site.phone.display}</span></p>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    border-bottom: 3px solid var(--gold);
+  }
+  .bar { display: flex; align-items: center; gap: 12px; min-height: 68px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; margin-right: auto; }
+  .brand-mark { width: 88px; height: auto; min-height: 42px; }
+  .brand-name { display: none; font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--on-dark); }
+
+  .actions { display: flex; align-items: center; gap: 10px; }
+  .call {
+    display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 16px;
+    border-radius: 999px; border: 2px solid var(--gold); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+  }
+  .call:hover { background: rgba(243, 246, 244, 0.08); }
+  .call-number { display: none; }
+  .start { display: none; min-height: 44px; padding: 8px 16px; font-size: 0.95rem; }
+
+  .nav-desktop { display: none; }
+
+  .nav-mobile summary {
+    list-style: none; cursor: pointer; min-height: 44px; display: inline-flex; align-items: center;
+    padding: 8px 12px; font-weight: 600; font-size: 0.95rem; border-radius: var(--radius-sm);
+  }
+  .nav-mobile summary::-webkit-details-marker { display: none; }
+  .nav-mobile summary::after { content: ''; width: 18px; height: 12px; margin-left: 10px;
+    background: linear-gradient(var(--on-dark), var(--on-dark)) top / 100% 2px no-repeat,
+                linear-gradient(var(--on-dark), var(--on-dark)) center / 100% 2px no-repeat,
+                linear-gradient(var(--on-dark), var(--on-dark)) bottom / 100% 2px no-repeat; }
+  .nav-mobile[open] summary { background: rgba(243, 246, 244, 0.1); }
+  .nav-mobile nav {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--green-deep); border-bottom: 3px solid var(--gold);
+    padding: 8px var(--gutter) 24px; max-height: calc(100dvh - 72px); overflow-y: auto;
+  }
+  .nav-mobile ul { list-style: none; margin: 0; padding: 0; }
+  .nav-mobile li { margin: 0; }
+  .nav-mobile .top { display: block; padding: 14px 0 6px; font-family: var(--font-display); font-weight: 700; font-size: 1.35rem; text-decoration: none; }
+  .nav-mobile li ul a { display: block; padding: 8px 0 8px 16px; color: var(--on-dark-muted); text-decoration: none; border-left: 1px solid rgba(195, 211, 205, 0.3); }
+  .nav-mobile .btn { margin: 20px 0 12px; width: 100%; }
+
+  @media (min-width: 560px) {
+    .call-number { display: inline; }
+    .start { display: inline-flex; }
+  }
+  @media (min-width: 720px) {
+    .brand-name { display: inline; }
+  }
+  @media (min-width: 1120px) {
+    .nav-mobile { display: none; }
+    .nav-desktop { display: block; }
+    .brand { margin-right: 0; }
+    .nav-desktop { margin-inline: auto; }
+    .nav-desktop > ul { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
+    .nav-desktop li { margin: 0; position: relative; }
+    .nav-desktop > ul > li > a {
+      display: inline-flex; align-items: center; min-height: 44px; padding: 8px 12px;
+      text-decoration: none; font-weight: 600; font-size: 0.98rem; border-radius: var(--radius-sm);
+    }
+    .nav-desktop > ul > li > a:hover { background: rgba(243, 246, 244, 0.08); }
+    .nav-desktop a[aria-current='page'] { box-shadow: inset 0 -2px 0 var(--gold); }
+    .sub {
+      position: absolute; left: 0; top: 100%; min-width: 240px; list-style: none; margin: 0; padding: 8px;
+      background: var(--green-deep); border: 1px solid rgba(195, 211, 205, 0.25); border-top: 3px solid var(--gold);
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      visibility: hidden; opacity: 0; transform: translateY(-4px); transition: opacity 0.12s, transform 0.12s, visibility 0.12s;
+    }
+    .has-sub:hover .sub, .has-sub:focus-within .sub { visibility: visible; opacity: 1; transform: none; }
+    .sub a { display: block; padding: 10px 12px; text-decoration: none; border-radius: 6px; color: var(--on-dark); }
+    .sub a:hover { background: rgba(243, 246, 244, 0.08); }
+  }
+</style>

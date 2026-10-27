@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import hhColor from '../../assets/brand/hh-logo-color.png';
+import { site } from '../../data/site';
+---
+<Base
+  title="Sales"
+  description="Floyd Homes and Land sales are powered by Howard Hanna. Dustin Floyd brings in the right specialist from a 50-person office when a deal calls for it."
+>
+  <PageHeader eyebrow="What we do · Sales" title="Powered by Howard Hanna." lede="Sales come first at FHL. We buy and sell homes and land across Southeastern Virginia, Northeastern North Carolina and the Outer Banks." />
+
+  <section class="section">
+    <div class="wrap grid-2 grid-2--wide-left">
+      <div class="prose">
+        <h2>One salesperson. A bench of fifty.</h2>
+        <p>
+          Dustin Floyd is the only active salesperson at FHL right now. We're part of a brokerage, and
+          the office our sales are based out of has 50 people, all with different niches and specialties.
+        </p>
+        <p>
+          That means FHL can pull on real expertise for specific buyer and seller situations, instead of
+          guessing at them.
+        </p>
+        <h3>An example</h3>
+        <p>
+          You call about a $7 million beach house because a friend recommended us. Dustin pulls on his
+          resources and brings on a second agent whose niche is ultra-luxury beach homes in that market.
+          They work together to get the seller the most out of the sale.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/start/buy-sell/">Start a buy or sell</a>
+          <a class="btn btn--ghost" href="/search/">Search listings</a>
+        </div>
+      </div>
+      <aside class="brokerage">
+        <Image src={hhColor} alt={site.brokerage.name} width={160} height={161} />
+        <p><strong>{site.brokerage.name}</strong><br />Office <span class="phone-plain">{site.brokerage.phone.display}</span></p>
+        <p>Sales email<br /><a href={`mailto:${site.email.sales}`}>{site.email.sales}</a></p>
+      </aside>
+    </div>
+  </section>
+
+  <CtaBand title="Buying or selling? Call Dustin." />
+</Base>
+
+<style>
+  .brokerage { border-left: 1px solid var(--line); padding-left: 32px; display: grid; gap: 16px; align-content: start; }
+  .brokerage :global(img) { width: 140px; }
+</style>

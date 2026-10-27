@@ -1,0 +1,127 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import square from '../../assets/photos/dustin-headshot-square.jpg';
+import { site } from '../../data/site';
+
+// Dustin's story from docs/brief.md, typos fixed, words unchanged otherwise.
+const timeline = [
+  { label: 'The farm', text: 'My grandfather was a farmer.' },
+  { label: 'The job site', text: 'My dad was in construction.' },
+  { label: 'The common ground', text: 'The one thing they had in common? Real estate.' },
+  { label: 'The trade', text: 'My trade is HVAC.' },
+  { label: 'Hickory Earthworks', text: 'My first real business was landscaping and grading. It grew into many more things than that, and worked for many builders, including national production builders.' },
+  { label: 'Floyd Homes and Land', text: 'The culmination of my life’s work up to this point.' },
+];
+---
+<Base
+  title="Who We Are"
+  description="The story behind Floyd Homes and Land: a farmer grandfather, a father in construction, and Dustin Floyd's path from HVAC and Hickory Earthworks to real estate."
+>
+  <PageHeader
+    eyebrow="Who we are"
+    title="Built from the farm and the job site."
+    lede="Floyd Homes and Land is the culmination of Dustin Floyd's work so far. Everything before it was done with the intent of marrying it all together one day."
+  />
+
+  <section class="section">
+    <div class="wrap memo-wrap">
+      <article class="memo" aria-labelledby="memo-title">
+        <header class="memo-head">
+          <p class="memo-kind" id="memo-title">Memo</p>
+          <dl>
+            <dt>To</dt><dd>You, for taking the time to read this</dd>
+            <dt>From</dt><dd>Dustin Floyd</dd>
+            <dt>Re</dt><dd>Why Floyd Homes and Land exists</dd>
+          </dl>
+        </header>
+        <div class="memo-body">
+          <p>My name is Dustin Floyd. Growing up, my dad was in construction and my grandfather was a farmer. Those two things intrigued me. The one thing they had in common? Real estate.</p>
+          <p>Fast forward to now: FHL is the culmination of my life’s work up to this point. Everything I’ve ever done was done with the intent of marrying it all together one day.</p>
+          <p>My “trade” is HVAC. If you count back to my childhood, I’ve owned hundreds of businesses. I still remember the first time I found out someone was an entrepreneur and asked what that meant, then knowing from that point on that’s what I wanted to be. I’ll save that story for my book one day.</p>
+          <p>My first “real” business was landscaping and grading. It grew into many more things than that, and Hickory Earthworks worked for many builders, including national production builders. The biggest takeaway from that company was the people and the network. I’m in the people business, but we trade in real estate.</p>
+          <p>As a leader, and the sole active salesperson at FHL at this time, I think the biggest strength I can offer clients is the ability to think big. Anything is possible. It might take a lot more work and a lot more time than you’re expecting, but anything is possible.</p>
+          <p>I’ll take it a step further and say: if you’re someone looking for a place to land that’s more than a job, but is a limitless umbrella to fit your entire life into, let’s go get coffee or lunch.</p>
+          <p>I look forward to working with you all, and thank you for taking the time to read this.</p>
+        </div>
+        <footer class="memo-sign">
+          <Image src={square} alt="Dustin Floyd" width={88} height={88} class="memo-photo" />
+          <div>
+            <p class="sig">Dustin Floyd</p>
+            <p class="muted small">{site.legalName}</p>
+          </div>
+        </footer>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">The line that leads here</p>
+      <h2>From the ground up.</h2>
+      <ol class="timeline">
+        {timeline.map((t, i) => (
+          <li>
+            <span class="t-pin" aria-hidden="true"></span>
+            <span class="t-num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{t.label}</h3>
+            <p>{t.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div>
+        <p class="eyebrow">On record</p>
+        <h2>Licenses.</h2>
+        <p class="muted">Real estate sales are made through {site.brokerage.name}.</p>
+        <a class="text-link" href="/who-we-are/values/">Our values</a>
+      </div>
+      <ul class="ledger licenses">
+        {site.licenses.map((l) => <li>{l}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand title="Let's go get coffee or lunch." text="Whether you're buying, selling, building or looking for a place to land, the first step is a conversation." />
+</Base>
+
+<style>
+  .memo-wrap { max-width: 860px; }
+  .memo {
+    background: var(--surface); border-radius: var(--radius-md); box-shadow: var(--shadow-card);
+    border-top: 4px solid var(--gold); padding: clamp(24px, 5vw, 64px);
+  }
+  .memo-head { border-bottom: 1.5px dashed rgba(14, 58, 50, 0.35); padding-bottom: 20px; margin-bottom: 28px; }
+  .memo-kind { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.2rem, 6vw, 3.2rem); color: var(--green-deep); margin: 0 0 16px; line-height: 1; }
+  .memo-head dl { display: grid; grid-template-columns: 4.5rem 1fr; gap: 8px 12px; margin: 0; }
+  .memo-head dt { font-family: var(--font-label); font-weight: 600; font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-ink); padding-top: 0.3em; }
+  .memo-head dd { margin: 0; }
+  .memo-body p { font-size: 1.08rem; line-height: 1.7; }
+  .memo-body p:first-child::first-letter { font-family: var(--font-display); font-weight: 700; float: left; font-size: 3.6em; line-height: 0.85; margin: 0.06em 0.08em 0 0; color: var(--green-deep); }
+  .memo-sign { display: flex; align-items: center; gap: 16px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .memo-sign p { margin: 0; }
+  :global(.memo-photo) { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--gold); }
+  .sig { font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--green-deep); }
+
+  .timeline { list-style: none; padding: 0; margin: 32px 0 0; position: relative; }
+  .timeline::before { content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; border-left: 1.5px dashed rgba(14, 58, 50, 0.35); }
+  .timeline li { position: relative; padding: 0 0 32px 40px; margin: 0; }
+  .t-pin { position: absolute; left: 1px; top: 6px; width: 12px; height: 12px; background: var(--gold); transform: rotate(45deg); }
+  .t-num { font-family: var(--font-label); font-weight: 600; font-size: 0.74rem; letter-spacing: 0.2em; color: var(--gold-ink); }
+  .timeline h3 { margin: 4px 0 6px; }
+  .timeline p { color: var(--muted); }
+  @media (min-width: 920px) {
+    .timeline { display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px; }
+    .timeline::before { left: 0; right: 0; top: 6px; bottom: auto; border-left: 0; border-top: 1.5px dashed rgba(14, 58, 50, 0.35); }
+    .timeline li { padding: 32px 0 0; }
+    .t-pin { left: 0; top: 0; }
+  }
+
+  .licenses li { padding: 16px 4px; }
+</style>

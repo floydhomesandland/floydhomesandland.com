@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import IntakeForm from '../components/IntakeForm.astro';
+import Field from '../components/Field.astro';
+import { site } from '../data/site';
+---
+<Base title="Contact" description="Contact Floyd Homes and Land: call or text Dustin Floyd at 757-803-7347, email, or visit 128 N Battlefield Blvd, Chesapeake, VA.">
+  <PageHeader eyebrow="Contact" title="Talk to Dustin." plat={false} />
+  <section class="section">
+    <div class="wrap grid-2">
+      <dl class="contact">
+        <div><dt>Call or text</dt><dd><a href={`tel:${site.phone.tel}`} class="phone-plain">{site.phone.display}</a></dd></div>
+        <div><dt>Buying or selling</dt><dd><a href={`mailto:${site.email.sales}`}>{site.email.sales}</a></dd></div>
+        <div><dt>Everything else</dt><dd><a href={`mailto:${site.email.general}`}>{site.email.general}</a></dd></div>
+        <div><dt>Office</dt><dd>{site.office.street}<br />{site.office.city}, {site.office.region} {site.office.postalCode}<br /><a href={site.office.mapUrl} rel="noopener">Open in Google Maps</a></dd></div>
+        <div><dt>Brokerage</dt><dd>{site.brokerage.name}<br /><span class="phone-plain">{site.brokerage.phone.display}</span></dd></div>
+      </dl>
+      <IntakeForm formKey="contact" title="Send a message" consentTopic="my message">
+        <Field label="Message" name="remarks" multiline required error="Write a message." />
+      </IntakeForm>
+    </div>
+  </section>
+</Base>
+<style>
+  .contact { margin: 0; border-top: 1px solid var(--line); }
+  .contact div { padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .contact dt { font-family: var(--font-label); font-weight: 600; font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 6px; }
+  .contact dd { margin: 0; font-size: 1.1rem; }
+  .contact dd a { overflow-wrap: anywhere; }
+</style>

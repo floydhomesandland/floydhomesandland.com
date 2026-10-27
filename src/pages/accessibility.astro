@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+---
+<Base title="Accessibility" description="Accessibility statement for floydhomesandland.com.">
+  <section class="section">
+    <div class="wrap wrap--narrow prose">
+      <h1>Accessibility</h1>
+      <p>We want everyone to be able to use this site. We build it to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.</p>
+      <p>
+        If something on the site doesn't work for you, tell us and we'll fix it. Call or text
+        <span class="phone-plain">{site.phone.display}</span> or email <a href={`mailto:${site.email.general}`}>{site.email.general}</a>.
+      </p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { site } from '../../data/site';
+
+const answers = [
+  { n: '01', title: 'Buy or sell', desc: 'A home or land, anywhere in SEVA, NENC or the OBX.', href: '/start/buy-sell/' },
+  { n: '02', title: 'Sell direct', desc: 'Got a letter from us? It was from Dustin Floyd at Floyd Homes and Land. See what selling direct means, then tell us about your property.', href: '/what-we-do/sell-direct/#form' },
+  { n: '03', title: 'Partner or joint venture', desc: 'Development or a JV on land or a property you have.', href: '/start/partner/' },
+  { n: '04', title: 'Invest in a deal', desc: 'Register your interest in future FHL deals.', href: '/invest/' },
+  { n: '05', title: 'Work at FHL', desc: 'More than a job. Tell us about yourself.', href: '/careers/apply/' },
+  { n: '06', title: 'Get the monthly memo', desc: 'Updates, memos and news, about once a month.', href: '/memo/' },
+];
+---
+<Base title="Get Started" description="Tell Floyd Homes and Land what brings you here: buying, selling, selling direct, a joint venture, investing, a career or the monthly memo.">
+  <PageHeader eyebrow="Get started" title="What brings you here?" lede="Pick the one that fits best. Each one leads to a short form that goes straight to Dustin." />
+
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      <ul class="ledger">
+        {answers.map((a) => (
+          <li>
+            <a class="ledger-link" href={a.href}>
+              <span class="ledger-num">{a.n}</span>
+              <span class="ledger-title">{a.title}</span>
+              <span class="ledger-arrow" aria-hidden="true">→</span>
+              <span class="ledger-desc">{a.desc}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="muted not-sure">Not sure? Call or text Dustin at <a href={`tel:${site.phone.tel}`} class="phone-plain">{site.phone.display}</a>, or <a href="/contact/">send a message</a>.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .not-sure { margin-top: 32px; }
+</style>

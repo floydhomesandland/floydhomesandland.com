@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection('housePlans');
+  return items.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<Base title={d.title} description={d.summary}>
+  <article>
+    <section class="section">
+      <div class="wrap">
+        <p class="eyebrow">House plan{d.footprint && ` · ${d.footprint}`}</p>
+        <h1>{d.title}</h1>
+        <p class="lede">{d.summary}</p>
+        <Image src={d.cover} alt={d.coverAlt} widths={[720, 1200, 1600]} sizes="(min-width: 1200px) 1120px, 100vw" loading="eager" class="cover" />
+      </div>
+    </section>
+    <section class="section"><div class="wrap prose"><Content /></div></section>
+    {d.gallery.length > 0 && (
+      <section class="section">
+        <div class="wrap">
+          <h2>Drawings</h2>
+          <ul class="gallery">
+            {d.gallery.map((g) => <li><figure><Image src={g.src} alt={g.alt} widths={[600, 1000]} sizes="(min-width: 720px) 50vw, 100vw" />{g.caption && <figcaption>{g.caption}</figcaption>}</figure></li>)}
+          </ul>
+        </div>
+      </section>
+    )}
+  </article>
+  <CtaBand />
+</Base>
+<style>
+  :global(.cover) { width: 100%; border-radius: var(--radius-md); margin-top: 32px; }
+  figure { margin: 0; }
+</style>

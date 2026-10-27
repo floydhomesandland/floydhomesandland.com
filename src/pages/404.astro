@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Plat from '../components/Plat.astro';
+---
+<Base title="Page not found" description="That page isn't here." noindex>
+  <section class="section">
+    <div class="wrap grid-2">
+      <div>
+        <p class="eyebrow">404</p>
+        <h1>Off the plat.</h1>
+        <p class="lede">That page isn't here. It may have moved, or the link may be off.</p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/">Back to home</a>
+          <a class="btn btn--ghost" href="/start/">Get started</a>
+        </div>
+      </div>
+      <Plat label="404" />
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import PlaceholderPhoto from '../../components/PlaceholderPhoto.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+const items = (await getCollection('properties')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Properties" description="Homes and land listed by Floyd Homes and Land in Southeastern Virginia, Northeastern North Carolina and the Outer Banks.">
+  <PageHeader eyebrow="Properties" title="Homes and land." lede="Current FHL listings, with photos. To search everything on the market in SEVA, NENC and the OBX, use the listing search." >
+    <div class="btn-row"><a class="btn btn--primary" href="/search/">Search all listings</a></div>
+  </PageHeader>
+
+  <section class="section">
+    <div class="wrap">
+      {items.length ? (
+        <ul class="items">
+          {items.map((p) => (
+            <li>
+              <a class="item" href={`/properties/${p.id}/`}>
+                <Image src={p.data.cover} alt={p.data.coverAlt} widths={[400, 720]} sizes="(min-width: 1080px) 380px, (min-width: 720px) 50vw, 100vw" />
+                <span class="item-meta">{p.data.status} · {p.data.market}</span>
+                <span class="item-title">{p.data.title}</span>
+                <span class="muted">{p.data.location}{p.data.price && ` · ${p.data.price}`}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="empty grid-2">
+          <div>
+            <h2>Listings with photos go here.</h2>
+            <p class="todo">[[TODO: Dustin to send current listings and photos, or confirm "search only" at launch]]</p>
+            <p>In the meantime, <a href="/search/">search every listing in SEVA, NENC and the OBX</a>.</p>
+          </div>
+          <PlaceholderPhoto label="Property photo" />
+        </div>
+      )}
+    </div>
+  </section>
+  <CtaBand title="Looking for something that isn't listed?" text="Tell us what you're after, and Dustin will keep an eye out." />
+</Base>

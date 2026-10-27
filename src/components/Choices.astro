@@ -1,0 +1,28 @@
+---
+import { nextId } from '../scripts/ids';
+// A group of radio (or checkbox) chips. `detail` sends the answer to Form Details.
+interface Props {
+  legend: string;
+  name: string;
+  options: string[];
+  required?: boolean;
+  multiple?: boolean;
+  detail?: string;
+  hint?: string;
+}
+const { legend, name, options, required = false, multiple = false, detail, hint } = Astro.props;
+const id = `f-${name}-${nextId()}`;
+---
+<fieldset class="field choices" id={id} data-required={required ? 'true' : undefined} data-detail={detail} aria-describedby={`${id}-err`}>
+  <legend>{legend}{!required && <span class="opt"> (optional)</span>}</legend>
+  {hint && <p class="hint">{hint}</p>}
+  <div class="chips">
+    {options.map((opt, i) => (
+      <label class="chip">
+        <input type={multiple ? 'checkbox' : 'radio'} name={name} value={opt} id={`${id}-${i}`} />
+        <span>{opt}</span>
+      </label>
+    ))}
+  </div>
+  <p class="err" id={`${id}-err`} hidden></p>
+</fieldset>

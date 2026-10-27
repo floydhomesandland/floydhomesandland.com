@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import IntakeForm from '../../components/IntakeForm.astro';
+import Field from '../../components/Field.astro';
+import Choices from '../../components/Choices.astro';
+---
+<Base title="Partner or Joint Venture" description="Have land or a property you'd like to develop or partner on? Tell Floyd Homes and Land about your project.">
+  <PageHeader eyebrow="Get started · Partner" title="Let's look at what it could become." lede="Development and joint ventures are evaluated case by case. Tell us about the land or property and what you're hoping for." plat={false} />
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div class="prose">
+        <h2>Before you start</h2>
+        <p>
+          Development and joint ventures aren't recommended for everyone. Sometimes the speed of the
+          money from a simple sale does more for you than the amount you might get from developing.
+          Dustin will tell you which one he thinks fits.
+        </p>
+        <p><a href="/what-we-do/development/">How we think about development</a></p>
+        <p><a href="/what-we-do/joint-ventures/">How joint ventures work</a></p>
+      </div>
+      <IntakeForm formKey="partner" title="Your project" consentTopic="a development or joint venture project">
+        <Choices legend="I am a" name="role" options={['Landowner or seller', 'Buyer', 'Builder or developer', 'Other']} required detail="Role" />
+        <Choices legend="I'm interested in" name="interest" options={['Development', 'A joint venture', 'Not sure yet']} />
+        <Field label="Property address or location" name="property_address" hint="Road and county is fine." />
+        <Field label="Rough acreage or size" name="acreage" detail="Acreage / size" />
+        <Field label="What are you hoping to do?" name="remarks" multiline required error="Tell us a little about what you have in mind." />
+      </IntakeForm>
+    </div>
+  </section>
+</Base>

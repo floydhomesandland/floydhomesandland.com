@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { site } from '../../data/site';
+
+const numerals = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+---
+<Base
+  title="Values"
+  description="The six values Floyd Homes and Land works by: honesty, hustle, be resourceful, think big, do the right thing, always be learning."
+>
+  <PageHeader eyebrow="Who we are" title="Six values." lede="These are the terms we hold ourselves to, in every deal and every conversation." />
+
+  <section class="section">
+    <div class="wrap">
+      <ol class="covenants">
+        {site.values.map((v, i) => (
+          <li>
+            <span class="cv-num">{numerals[i]}</span>
+            <div>
+              <h2>{v}</h2>
+              <p class="todo">[[TODO: one or two lines from Dustin on what "{v}" means at FHL]]</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .covenants { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }
+  .covenants li { margin: 0; display: grid; grid-template-columns: clamp(4.5rem, 14vw, 9rem) 1fr; gap: 16px; padding: clamp(24px, 4vw, 40px) 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .cv-num { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.6rem, 8vw, 5rem); line-height: 0.9; color: var(--gold-ink); }
+  .covenants h2 { font-size: clamp(1.9rem, 5vw, 3rem); margin-bottom: 12px; }
+</style>

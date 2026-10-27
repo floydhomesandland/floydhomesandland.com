@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+const services = [
+  { n: '01', title: 'Sales', desc: 'Buying and selling homes and land, powered by Howard Hanna, with the right specialist brought in when a deal calls for one.', href: '/what-we-do/sales/' },
+  { n: '02', title: 'Development', desc: 'Helping sellers find the value in their land and unlock it. Evaluated case by case.', href: '/what-we-do/development/' },
+  { n: '03', title: 'Joint ventures', desc: 'Partnering with buyers and sellers who want to capitalize on more than a simple sale.', href: '/what-we-do/joint-ventures/' },
+  { n: '04', title: 'Sell direct', desc: 'Selling your land or home straight to FHL, and when that does or doesn’t make sense.', href: '/what-we-do/sell-direct/' },
+];
+---
+<Base
+  title="What We Do"
+  description="Floyd Homes and Land sells homes and land first, then adds development and joint venture options for clients who want more than a simple sale."
+>
+  <PageHeader
+    eyebrow="What we do"
+    title="We sell first. Second, we add value."
+    lede="Every client starts with a sale. For clients who want to capitalize on more than that, we offer development or a joint venture on top."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="ledger">
+        {services.map((s) => (
+          <li>
+            <a class="ledger-link" href={s.href}>
+              <span class="ledger-num">{s.n}</span>
+              <span class="ledger-title">{s.title}</span>
+              <span class="ledger-arrow" aria-hidden="true">→</span>
+              <span class="ledger-desc">{s.desc}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

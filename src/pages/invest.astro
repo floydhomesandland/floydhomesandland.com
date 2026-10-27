@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import IntakeForm from '../components/IntakeForm.astro';
+import Field from '../components/Field.astro';
+import Choices from '../components/Choices.astro';
+---
+<Base title="Invest" description="Register your interest in investing alongside Floyd Homes and Land in future real estate deals.">
+  <PageHeader eyebrow="Invest" title="Partner in a deal." lede="We raise money for specific real estate deals. If you'd like to hear about them, register your interest and Dustin will reach out." />
+  <section class="section">
+    <div class="wrap grid-2">
+      <div class="prose">
+        <h2>How our deals are set up</h2>
+        <p>
+          Each deal is its own company, an LLC that owns that one property, piece of land or house.
+          Investing means partnering in that company as one of its members.
+        </p>
+        <p>
+          We don't post deal details, amounts or open spots on this site. Register your interest and
+          we'll talk one on one.
+        </p>
+        <p class="small muted disclaimer">
+          Nothing on this page is an offer to sell, or a request for an offer to buy, any security.
+          Any investment is made only through the deal's own documents.
+        </p>
+        <p class="todo">[[TODO: securities attorney to review this page and the disclaimer before launch]]</p>
+      </div>
+      <IntakeForm formKey="invest" title="Register your interest" submitLabel="Register my interest" consentTopic="future investment opportunities">
+        <Choices legend="What interests you?" name="interest" options={['Land', 'Homes', 'Development projects', 'Open to anything']} multiple />
+        <Choices legend="Have you invested in real estate before?" name="experience" options={['Yes', 'No']} detail="Invested in real estate before" />
+        <Field label="Questions or anything we should know" name="remarks" multiline />
+      </IntakeForm>
+    </div>
+  </section>
+</Base>

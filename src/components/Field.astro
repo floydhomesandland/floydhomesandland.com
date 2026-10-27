@@ -1,0 +1,31 @@
+---
+import { nextId } from '../scripts/ids';
+// One labelled input or textarea. `detail` sends the answer to Airtable's Form Details
+// column under that label instead of a column of its own.
+interface Props {
+  label: string;
+  name: string;
+  type?: 'text' | 'tel' | 'email' | 'url' | 'number';
+  required?: boolean;
+  hint?: string;
+  autocomplete?: string;
+  multiline?: boolean;
+  detail?: string;
+  error?: string;
+  inputmode?: 'text' | 'tel' | 'email' | 'numeric' | 'decimal';
+}
+const { label, name, type = 'text', required = false, hint, autocomplete, multiline = false, detail, error, inputmode } = Astro.props;
+const id = `f-${name}-${nextId()}`;
+const describedBy = [hint ? `${id}-hint` : null, `${id}-err`].filter(Boolean).join(' ');
+const errorText = error ?? `Fill in ${label.toLowerCase().replace(/\s*\(optional\)$/, '')}.`;
+---
+<div class="field">
+  <label for={id}>{label}{!required && <span class="opt"> (optional)</span>}</label>
+  {hint && <p class="hint" id={`${id}-hint`}>{hint}</p>}
+  {multiline ? (
+    <textarea id={id} name={name} rows="4" required={required} aria-describedby={describedBy} data-detail={detail} data-error={errorText}></textarea>
+  ) : (
+    <input id={id} name={name} type={type} required={required} autocomplete={autocomplete} inputmode={inputmode} aria-describedby={describedBy} data-detail={detail} data-error={errorText} />
+  )}
+  <p class="err" id={`${id}-err`} hidden></p>
+</div>

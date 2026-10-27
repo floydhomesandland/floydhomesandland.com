@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import IntakeForm from '../../components/IntakeForm.astro';
+import Field from '../../components/Field.astro';
+import Choices from '../../components/Choices.astro';
+import { site } from '../../data/site';
+---
+<Base title="Buy or Sell" description="Buying or selling a home or land in Southeastern Virginia, Northeastern North Carolina or the Outer Banks? Tell Dustin Floyd what you're looking for.">
+  <PageHeader eyebrow="Get started · Buy or sell" title="Buying, selling, or both." lede="Tell us what you're after. Dustin will reach out, and bring in a specialist from Howard Hanna if your situation calls for one." plat={false} />
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div class="prose">
+        <h2>What happens next</h2>
+        <ol class="steps">
+          <li><strong>You send this form.</strong> It goes straight to Dustin.</li>
+          <li><strong>Dustin reaches out</strong> the way you asked, at the time you picked.</li>
+          <li><strong>You talk it through.</strong> If your situation calls for a specialist, he brings one in.</li>
+        </ol>
+        <p>Rather search on your own first? <a href="/search/">Search listings in SEVA, NENC and the OBX</a>.</p>
+        <p>Sales email: <a href={`mailto:${site.email.sales}`}>{site.email.sales}</a></p>
+      </div>
+      <IntakeForm formKey="buy-sell" title="Tell us what you need" consentTopic="buying or selling real estate">
+        <Choices legend="I want to" name="interest" options={['Buy', 'Sell', 'Buy and sell']} required />
+        <Choices legend="Type of property" name="property_type" options={['Home', 'Land', 'Home with land', 'Not sure yet']} detail="Property type" />
+        <Choices legend="Where" name="area" options={['Southeastern Virginia', 'Northeastern North Carolina', 'Outer Banks', 'Not sure yet']} multiple detail="Area" />
+        <Field label="Address of the property you're selling" name="property_address" autocomplete="street-address" hint="Only if you're selling." />
+        <Field label="Price or budget you have in mind" name="asking_price" />
+        <Choices legend="Timeline" name="timeline" options={['As soon as possible', 'In the next 3 months', 'In the next year', 'Just exploring']} />
+        <Field label="Anything else we should know?" name="remarks" multiline />
+      </IntakeForm>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .steps { padding-left: 1.4em; }
+  .steps li { padding-left: 0.3em; }
+  .steps li::marker { font-family: var(--font-display); font-weight: 700; color: var(--gold-ink); }
+</style>

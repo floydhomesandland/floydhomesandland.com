@@ -1,0 +1,100 @@
+---
+import { Image } from 'astro:assets';
+import logoGold from '../assets/brand/fhl-logo-gold.png';
+import hhWhite from '../assets/brand/hh-logo-white.png';
+import ehoWhite from '../assets/brand/eho-logo-white.png';
+import IntakeForm from './IntakeForm.astro';
+import { footerLinks, legalLinks, nav, site } from '../data/site';
+
+const year = new Date().getFullYear();
+const hideMemo = Astro.url.pathname.startsWith('/memo/') || Astro.url.pathname.startsWith('/thanks/');
+---
+{!hideMemo && (
+  <section class="memo-band" aria-labelledby="memo-band-title">
+    <div class="wrap memo-grid">
+      <div>
+        <p class="eyebrow">The monthly memo</p>
+        <h2 id="memo-band-title">One letter a month. Land, homes and what we're working on.</h2>
+        <p class="muted">Updates, memos and news from FHL as they come out, about once a month.</p>
+      </div>
+      <IntakeForm formKey="memo" contact="email" card={false} submitLabel="Sign me up" consentTopic="the monthly memo and FHL updates" />
+    </div>
+  </section>
+)}
+
+<footer class="site-footer on-dark topo">
+  <div class="wrap">
+    <div class="logos">
+      <Image src={logoGold} alt={`${site.name}: ${site.tagline}`} width={260} height={137} class="fhl" />
+      <span class="divider" aria-hidden="true"></span>
+      <Image src={hhWhite} alt={site.brokerage.name} width={110} height={111} class="hh" />
+    </div>
+
+    <div class="cols">
+      <div>
+        <h2 class="col-title">Contact</h2>
+        <p>Dustin Floyd<br />Call or text <a href={`tel:${site.phone.tel}`} class="phone-plain">{site.phone.display}</a></p>
+        <p>Buying or selling: <a href={`mailto:${site.email.sales}`}>{site.email.sales}</a><br />
+          Everything else: <a href={`mailto:${site.email.general}`}>{site.email.general}</a></p>
+        <p>{site.office.street}<br />{site.office.city}, {site.office.region} {site.office.postalCode}</p>
+      </div>
+      <nav aria-label="Footer">
+        <h2 class="col-title">Explore</h2>
+        <ul>
+          {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+          <li><a href="/start/">Get started</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="More">
+        <h2 class="col-title">More</h2>
+        <ul>{footerLinks.map((n) => <li><a href={n.href}>{n.label}</a></li>)}</ul>
+        {site.social.length > 0 ? (
+          <ul class="social">{site.social.map((s) => <li><a href={s.href} rel="me">{s.label}</a></li>)}</ul>
+        ) : (
+          <span class="todo">[[TODO: social links]]</span>
+        )}
+      </nav>
+      <div>
+        <h2 class="col-title">Licenses</h2>
+        <ul class="licenses">{site.licenses.map((l) => <li>{l}</li>)}</ul>
+      </div>
+    </div>
+
+    <div class="legal">
+      <Image src={ehoWhite} alt="Equal Housing Opportunity" width={58} height={55} class="eho" />
+      <div>
+        <p>Real estate sales powered by <strong>{site.brokerage.name}</strong>, <a href={`tel:${site.brokerage.phone.tel}`} class="phone-plain">{site.brokerage.phone.display}</a>.
+          Dustin Floyd, <span class="phone-plain">{site.phone.display}</span>.</p>
+        <p>© {year} {site.legalName} All rights reserved.
+          {legalLinks.map((l) => <> · <a href={l.href}>{l.label}</a></>)}</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .memo-band { padding-block: clamp(48px, 7vw, 88px); border-top: 1px solid var(--line); background: var(--surface); }
+  .memo-grid { display: grid; gap: 32px; }
+  .memo-grid h2 { max-width: 20ch; }
+  @media (min-width: 920px) { .memo-grid { grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; } }
+
+  .site-footer { padding-block: 56px 32px; font-size: 0.95rem; border-top: 3px solid var(--gold); }
+  .logos { display: flex; align-items: center; gap: 24px; padding-bottom: 36px; border-bottom: 1px solid rgba(195, 211, 205, 0.25); }
+  .fhl { width: clamp(200px, 40vw, 260px); }
+  .divider { width: 1px; align-self: stretch; background: var(--gold); }
+  .hh { width: clamp(80px, 16vw, 110px); }
+  .cols { display: grid; gap: 32px; padding-block: 36px; }
+  @media (min-width: 720px) { .cols { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1080px) { .cols { grid-template-columns: 1.3fr 0.8fr 0.8fr 1.3fr; } }
+  .col-title { font-family: var(--font-label); font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--on-dark-muted); margin-bottom: 14px; }
+  .cols ul { list-style: none; padding: 0; margin: 0; }
+  .cols li + li { margin-top: 8px; }
+  .cols a { text-decoration: none; }
+  .cols a:hover { text-decoration: underline; }
+  .cols p { color: var(--on-dark); }
+  .licenses li { color: var(--on-dark-muted); font-size: 0.88rem; }
+  .social { margin-top: 16px !important; }
+  .legal { display: grid; grid-template-columns: 58px 1fr; gap: 20px; align-items: start; padding-top: 28px; border-top: 1px solid rgba(195, 211, 205, 0.25); color: var(--on-dark-muted); font-size: 0.88rem; }
+  .legal p { max-width: none; margin-bottom: 6px; }
+  .legal strong { color: var(--on-dark); font-weight: 600; }
+</style>

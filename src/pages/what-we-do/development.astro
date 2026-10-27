@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaBand from '../../components/CtaBand.astro';
+---
+<Base
+  title="Development"
+  description="How Floyd Homes and Land uses development to help sellers find and unlock the value in their land, and why it isn't right for every seller."
+>
+  <PageHeader
+    eyebrow="What we do · Development"
+    title="Because we care what our towns look like."
+    lede="Development is how FHL cares for the places we work. It also gives us an edge when we help sellers figure out what their land is worth, and how to unlock it."
+  />
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div class="prose">
+        <p class="eyebrow">The honest part</p>
+        <h2>It isn't recommended for everyone.</h2>
+        <p>
+          We evaluate development case by case. Sometimes the speed of the money, just selling the land,
+          does more for a seller and their situation than the amount of money they might get if it were
+          developed.
+        </p>
+        <p>We'll tell you which one we think fits you, and why.</p>
+      </div>
+      <div class="scale" aria-label="Speed of money compared with amount of money">
+        <div class="side">
+          <p class="eyebrow">Speed of the money</p>
+          <h3>Sell the land as it is.</h3>
+          <p class="muted">Faster. Simpler. Often the right call.</p>
+        </div>
+        <div class="side">
+          <p class="eyebrow">Amount of the money</p>
+          <h3>Develop it first.</h3>
+          <p class="muted">Likely more, if it's developed. Takes more time and more work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">See the work</p>
+      <h2>Our developments.</h2>
+      <p>Site plans and renderings of FHL projects live on the developments page.</p>
+      <div class="btn-row">
+        <a class="btn btn--primary" href="/developments/">View developments</a>
+        <a class="btn btn--ghost" href="/start/partner/">Talk about your land</a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Wondering what your land could become?" />
+</Base>
+
+<style>
+  .scale { display: grid; border-top: 1px solid var(--line); }
+  .side { padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .side h3 { margin-bottom: 6px; }
+</style>

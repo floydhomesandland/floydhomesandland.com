@@ -1,0 +1,186 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Plat from '../components/Plat.astro';
+import PlatRule from '../components/PlatRule.astro';
+import CtaBand from '../components/CtaBand.astro';
+import portrait from '../assets/photos/dustin-headshot-portrait.jpg';
+import { site } from '../data/site';
+
+const paths = [
+  { n: '01', title: 'Buy or sell', desc: 'A home, a lot or a farm, anywhere in SEVA, NENC or the OBX.', href: '/start/buy-sell/' },
+  { n: '02', title: 'Sell direct to FHL', desc: 'Got a letter from us? Start here to see who we are and what selling direct means.', href: '/what-we-do/sell-direct/' },
+  { n: '03', title: 'Partner on a project', desc: 'Development and joint ventures with buyers and sellers.', href: '/start/partner/' },
+  { n: '04', title: 'Work with us', desc: 'More than a job. Agents, grads and anyone with an idea.', href: '/careers/' },
+  { n: '05', title: 'Get the monthly memo', desc: 'Updates, memos and news, about once a month.', href: '/memo/' },
+];
+const numerals = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+---
+<Base
+  title="Home"
+  description="Floyd Homes and Land sells homes and land in Southeastern Virginia, Northeastern North Carolina and the Outer Banks, with development and joint venture options for clients who want more than a simple sale."
+>
+  <a class="mail-strip" href="/mail/">
+    <span class="wrap"><strong>Got a letter from us?</strong> See who sent it and what it means <span aria-hidden="true">→</span></span>
+  </a>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow">Southeastern Virginia · Northeastern North Carolina · Outer Banks</p>
+        <h1>We sell homes and land. <span class="display-line">Then we help you think bigger.</span></h1>
+        <p class="lede">
+          Floyd Homes and Land sells first. When a client wants more than a simple sale, we bring
+          development and joint ventures to the table, because we specialize in land development
+          and investment ourselves.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href={`tel:${site.phone.tel}`}>Call {site.phone.display}</a>
+          <a class="btn btn--ghost" href="/start/">What brings you here?</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <Plat class="hero-plat" />
+        <figure>
+          <Image src={portrait} alt="Dustin Floyd standing on the waterfront with his arms crossed, a bridge and marsh grass behind him" widths={[320, 480, 640]} sizes="(min-width: 920px) 360px, 70vw" loading="eager" fetchpriority="high" />
+          <figcaption><span class="sig">Dustin Floyd</span><span class="muted small">Floyd Homes and Land</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">Where we work</p>
+      <h2 class="sr-only">Our markets</h2>
+      <ol class="markets">
+        {site.markets.map((m, i) => (
+          <li>
+            <span class="m-num">Tract {numerals[i]}</span>
+            <span class="m-short">{m.short}</span>
+            <span class="m-name">{m.name}</span>
+          </li>
+        ))}
+      </ol>
+      <p class="muted search-note">Looking for something specific? <a href="/search/">Search listings across all three</a>.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div>
+        <p class="eyebrow">What we do</p>
+        <h2>Sales come first.</h2>
+        <p>
+          Our sales are powered by Howard Hanna. Dustin is the only salesperson at FHL right now,
+          but the office he sells out of has 50 people, each with a different niche.
+        </p>
+        <p>
+          When a deal calls for it, we bring the right specialist in. Call about a $7 million beach
+          house and we'll pair you with an agent whose niche is ultra-luxury beach homes in that
+          market, and work the sale together.
+        </p>
+        <a class="text-link" href="/what-we-do/sales/">How sales work</a>
+      </div>
+      <div>
+        <p class="eyebrow">And then</p>
+        <h2>Value-add, when it fits.</h2>
+        <p>
+          Some clients want more than a sale. For them we offer development and joint ventures,
+          which can help a seller find the value in their land and unlock it.
+        </p>
+        <p>
+          It isn't for everyone. Sometimes the speed of the money does more for you than the amount.
+          We look at it case by case and tell you straight.
+        </p>
+        <a class="text-link" href="/what-we-do/development/">Development</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a class="text-link" href="/what-we-do/joint-ventures/">Joint ventures</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2 grid-2--wide-left">
+      <div>
+        <p class="eyebrow">Get started</p>
+        <h2>What brings you here?</h2>
+        <ul class="ledger">
+          {paths.map((p) => (
+            <li>
+              <a class="ledger-link" href={p.href}>
+                <span class="ledger-num">{p.n}</span>
+                <span class="ledger-title">{p.title}</span>
+                <span class="ledger-arrow" aria-hidden="true">→</span>
+                <span class="ledger-desc">{p.desc}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <blockquote class="pull">
+        <p>“I'm in the people business, but we trade in real estate.”</p>
+        <footer><span class="sig">Dustin Floyd</span> <a class="text-link" href="/who-we-are/">Read his memo</a></footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <PlatRule />
+
+  <section class="section values">
+    <div class="wrap">
+      <p class="eyebrow">What we hold to</p>
+      <h2>Six values.</h2>
+      <ol class="covenants">
+        {site.values.map((v, i) => <li><span class="cv-num">{numerals[i]}</span><span class="cv-name">{v}</span></li>)}
+      </ol>
+      <a class="text-link" href="/who-we-are/values/">What they mean to us</a>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .mail-strip { display: block; background: var(--green-tint); color: var(--green-deep); text-decoration: none; font-size: 0.95rem; }
+  .mail-strip .wrap { display: block; padding-block: 12px; }
+  .mail-strip:hover strong { text-decoration: underline; }
+
+  .hero { padding-block: clamp(40px, 7vw, 96px); overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero-grid { display: grid; gap: 40px; align-items: center; }
+  .hero-text h1 { max-width: 15ch; }
+  .hero-photo { position: relative; isolation: isolate; justify-self: center; width: min(100%, 360px); }
+  .hero-photo figure { margin: 0; position: relative; }
+  .hero-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-md); border-bottom: 4px solid var(--gold); }
+  .hero-photo figcaption { display: flex; flex-direction: column; margin-top: 14px; }
+  :global(.hero-plat) { position: absolute; width: 140%; max-width: none; left: -32%; top: -9%; z-index: -1; opacity: 0.75; }
+  .sig { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--green-deep); }
+  @media (min-width: 920px) {
+    .hero-grid { grid-template-columns: 1.4fr 1fr; }
+    .hero-photo { justify-self: end; }
+  }
+
+  .markets { list-style: none; padding: 0; margin: 0; display: grid; border-top: 1px solid var(--line); }
+  .markets li { margin: 0; padding: 24px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 6.5rem 1fr; gap: 4px 20px; align-items: baseline; }
+  .m-num { font-family: var(--font-label); font-weight: 600; font-size: 0.74rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-ink); grid-row: span 2; padding-top: 0.6em; }
+  .m-short { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.6rem, 7vw, 4rem); line-height: 1; color: var(--green-deep); }
+  .m-name { color: var(--muted); }
+  @media (min-width: 920px) {
+    .markets { grid-template-columns: repeat(3, 1fr); border-top: 0; }
+    .markets li { grid-template-columns: 1fr; border-bottom: 0; border-left: 1px solid var(--line); padding: 8px 32px; }
+    .markets li:first-child { border-left: 0; padding-left: 0; }
+    .m-num { grid-row: auto; padding-top: 0; }
+  }
+  .search-note { margin-top: 24px; }
+  .sep { margin-inline: 10px; color: var(--muted); }
+
+  .pull { margin: 0; padding: 0 0 0 0; align-self: center; }
+  .pull p { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.15; color: var(--green-deep); max-width: 18ch; }
+  .pull footer { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 16px; align-items: baseline; }
+
+  .covenants { list-style: none; padding: 0; margin: 8px 0 32px; display: grid; gap: 0; border-top: 1px solid var(--line); }
+  .covenants li { margin: 0; display: grid; grid-template-columns: 4.5rem 1fr; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .cv-num { font-family: var(--font-display); font-weight: 700; font-size: 1.6rem; color: var(--gold-ink); }
+  .cv-name { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 3.5vw, 2.2rem); color: var(--green-deep); line-height: 1.1; }
+  @media (min-width: 920px) { .covenants { grid-template-columns: repeat(2, 1fr); column-gap: 64px; } }
+</style>

@@ -9,8 +9,9 @@ Treat that file as the source of truth for business facts and copy.
 1. **Don't invent facts about the business.** No made-up stats, sales volumes, years in
    business, reviews, testimonials, awards, partner names, listings, deal figures or
    quotes. If a page needs something we don't have, use a placeholder.
-2. **Placeholder convention.** Write `[[TODO: what's needed]]` in copy, and use
-   `/images/placeholder/*.svg` for missing images. Before a deploy to main, run
+2. **Placeholder convention.** Write `[[TODO: what's needed]]` in copy (inside a
+   `class="todo"` element so it shows as a red dashed box), and use the
+   `<PlaceholderPhoto label="…" />` component for missing images. Before a deploy to main, run
    `grep -rn "\[\[TODO" src/` and show Dustin what's still open. Placeholders must look
    obviously unfinished on a preview, never like real content.
 3. **Ask before you publish.** `main` auto-deploys to production on Netlify. Work on a
@@ -162,14 +163,15 @@ documents that land lives in: survey plats, deed books, field notes, county maps
   interactive pieces (a photo gallery lightbox, a form step indicator) as islands only where needed.
 - **Hosting:** Netlify, auto-deploys from `main`. Build settings are in `netlify.toml`
   (`npm run build`, publish `dist/`, Node 22).
-- **Forms → Airtable (decided).** Every site form POSTs JSON to the Airtable automation
+- **Forms → Airtable (decided).** Every site form POSTs (form-encoded, `no-cors`, same as the
+  campaign landing pages; see `src/scripts/forms.ts`) to the Airtable automation
   **"Website form → Responses + lead alert"** (`wflnRbezD8AXsyxaX`) in the
   **MAILING ROUTES/ CAMPAIGNS** base (`appFYyqgvckxPOcTN`). It creates a row in
   **Responses**, tagged so it reads as a website lead, and emails Dustin "A new lead from your
   website has just put in their info". This is a separate webhook from the mail-campaign
   one (`Landing page → Responses + lead alert`). Never post site forms to that one.
   - Webhook URL: `https://hooks.airtable.com/workflows/v1/genericWebhook/appFYyqgvckxPOcTN/wflnRbezD8AXsyxaX/wtrLaCcyr4N2Yr73L`
-  - Payload keys (strings): `form` (exactly one of: `Buy or sell`, `Sell direct`,
+  - Payload keys: `form` (exactly one of: `Buy or sell`, `Sell direct`,
     `Partner / JV`, `Invest interest`, `Careers`, `Monthly memo`, `Contact`), `name`,
     `phone`, `email`, `contact_method`, `contact_time`, `consent` (`"true"`/`"false"`),
     `property_address`, `interest`, `asking_price`, `timeline`, `remarks`, `details`
@@ -180,9 +182,10 @@ documents that land lives in: survey plats, deed books, field notes, county maps
     is set, otherwise `Mail campaign`).
   - Keep a honeypot field and client-side validation. Show the thank-you page only after
     the POST succeeds, and if it fails, show a written error with Dustin's phone number.
-  - Status: built in Airtable as a draft, **not yet on**. It needs one sample POST so
-    Airtable learns the payload, then the script and email steps are wired in and Dustin
-    turns it on.
+  - Alert email goes to **both** floydhomesandland@gmail.com and dustinfloyd@howardhanna.com.
+  - Status: fully built in Airtable (script + email). **Dustin must turn it on** in the
+    Airtable UI. Until then, submissions don't create rows or send email.
+  - A submission named `SETUP SAMPLE` is filed as Test / Spam; use that name when testing.
 - **Newsletter:** needs an email platform (e.g. Mailchimp, Kit, Beehiiv). [[TODO: Dustin
   to choose]]. Until then, sign-ups land in Airtable Responses as `Monthly memo`.
 - **Real estate search (decided):** link out to https://dustinfloyd.howardhanna.com.
@@ -195,6 +198,22 @@ documents that land lives in: survey plats, deed books, field notes, county maps
   Contrast ratios are documented in the token table.
 - **Performance budget:** Lighthouse mobile ≥ 95. Self-hosted, subset fonts with
   `font-display: swap`. Lazy-load images below the fold.
+
+## Working on the code
+
+- `npm install`, then `npm run dev` (local server), `npm run build` (what Netlify runs),
+  `npx astro check` (types). Node 22.22+.
+- `src/data/site.ts` holds every business fact, the nav, and the form list. Change facts there,
+  not in pages.
+- `src/content/` holds properties, developments, house plans and memos as Markdown
+  (see `src/content/README.md`). Empty collections show a placeholder state; the build warns
+  that they're empty, which is expected.
+- `src/components/IntakeForm.astro` + `Field` / `Choices` build every form. A field with
+  `detail="Label"` goes into Airtable's Form Details column as `Label: value`.
+- Brand images live in `src/assets/brand/` and `src/assets/photos/` (Astro optimizes them).
+  `public/og-image.jpg` and `public/favicon.png` were generated from them.
+- Design pieces: `Plat.astro` (decorative survey drawing), `PlatRule.astro` (divider),
+  `.ledger` lists (rule-separated rows instead of cards), `.topo` (contour texture on green bands).
 
 ## Compliance (carry onto every page)
 
@@ -222,7 +241,7 @@ documents that land lives in: survey plats, deed books, field notes, county maps
   Printed QR codes point there, so don't move or break it. This site's "Got mail from us?"
   page links to it and explains the mailers.
 
-## Proposed sitemap (awaiting Dustin's approval)
+## Sitemap (approved 2026-10-27)
 
 Primary navigation: **Who We Are · What We Do · Properties · Invest · Careers**, plus a
 "Call" button and a "Get started" button.
@@ -295,11 +314,11 @@ The open list lives here. Strike items through as they arrive.
 
 | date | decision | status |
 | --- | --- | --- |
-| 2026-10-27 | Framework: Astro, static output, deployed on Netlify | Recommended, pending approval |
-| 2026-10-27 | Sitemap as above | Proposed, pending approval |
+| 2026-10-27 | Framework: Astro, static output, deployed on Netlify | Decided (Dustin) |
+| 2026-10-27 | Sitemap as above | Decided (Dustin) |
 | 2026-10-27 | Brand: use FHL Brand Guide tokens, fonts, logos as-is | Decided (Dustin's instruction) |
-| 2026-10-27 | Design concept "the land record" (plat lines, deed covenants, field-notes memo) | Proposed |
-| 2026-10-27 | Forms post to Airtable (MAILING ROUTES/ CAMPAIGNS → Responses), tagged Website, email alert to Dustin | Decided (Dustin) |
+| 2026-10-27 | Design concept "the land record" (plat lines, deed covenants, field-notes memo) | Decided (no objection) |
+| 2026-10-27 | Forms post to Airtable (MAILING ROUTES/ CAMPAIGNS → Responses), tagged Website, email alert to both of Dustin's addresses | Decided (Dustin) |
 | 2026-10-27 | Real estate search links out to Howard Hanna site; Dustin adds IDX later | Decided (Dustin) |
 | 2026-10-27 | Merge "Client shop" into "Free stuff" | Decided (Dustin) |
 | 2026-10-27 | Deals to fund: "I'm interested" form only, no deal terms public | Decided (Dustin) |
