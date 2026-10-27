@@ -71,6 +71,8 @@ Treat that file as the source of truth for business facts and copy.
 2. **Browse:** property photos and every section, so visitors understand the business.
 3. **Fill out an intake form.** There are four paths:
    - 1 — Buy or sell a property
+   - 1A — Sell direct to FHL (many of these visitors arrive from a mailer and first
+     want to know who sent the letter)
    - 1B — Joint venture (JV) / development partnership
    - 2 — Work at FHL (careers)
    - 3 — Monthly memo / newsletter / updates sign-up (about once a month)
@@ -209,8 +211,12 @@ Primary navigation: **Who We Are · What We Do · Properties · Invest · Career
 
 ```
 /                         Home: who FHL is, the three markets, sales + value-add, 4 intake paths
-/start/                   Intake hub: "What brings you here?" → the 4 forms
+/start/                   Intake hub: "What brings you here?" → one answer per path:
+                            Buy or sell · Sell direct · Partner/JV · Careers · Memo
   /start/buy-sell/        1  Buy or sell (home or land)
+  (Sell direct → /what-we-do/sell-direct/, which holds the 1A form. The answer's
+   copy speaks to mailer recipients: "Got a letter from us?" Say who FHL is in one
+   line, then point to the sell-direct form. Don't duplicate the form.)
   /start/partner/         1B JV / development partnership
   (careers form lives on /careers/apply/, newsletter form site-wide)
 /who-we-are/              Our story + Dustin's memo, timeline, licenses
@@ -239,6 +245,7 @@ Primary navigation: **Who We Are · What We Do · Properties · Invest · Career
 /partners/                Partners and affiliates (only ones Dustin confirms)
 /free-stuff/              Free swag, stickers, giveaways, the memo (client shop merged in)
 /mail/                    "Got mail from us?": explains the mailers, links to campaign site
+                          and to the sell-direct form
 /contact/                 Phone, email, office, map
 /privacy/  /terms/  /accessibility/
 /thanks/[form]/           One thank-you page per form
@@ -278,3 +285,4 @@ The open list lives here. Strike items through as they arrive.
 | 2026-10-27 | Real estate search links out to Howard Hanna site; IDX later if approved | Decided (per brief) |
 | 2026-10-27 | Merge "Client shop" into "Free stuff" | Proposed |
 | 2026-10-27 | Deals to fund gated pending legal review | Proposed |
+| 2026-10-27 | "Sell direct" is an answer on Get Started's "What brings you here?", aimed at mailer recipients; it leads to the one sell-direct form | Decided (Dustin) |
