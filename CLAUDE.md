@@ -53,8 +53,9 @@ Treat that file as the source of truth for business facts and copy.
 - **Contact:**
   - Dustin: **757-803-7347**
   - Howard Hanna Real Estate Services office: **(757) 547-9691**
-  - Email: [[TODO: public email address]]
-  - Office/mailing address: [[TODO]]
+  - Sales email (buying/selling): **dustinfloyd@howardhanna.com**
+  - All other inquiries: **floydhomesandland@gmail.com**
+  - Office: **128 N Battlefield Blvd, Chesapeake, VA 23320**
   - Social links: [[TODO: Instagram, Facebook, YouTube, TikTok, LinkedIn, etc.]]
   - Howard Hanna agent site (listings search): https://dustinfloyd.howardhanna.com
 - **Licenses (show exactly as written, e.g. in the footer and on Who We Are):**
@@ -126,10 +127,9 @@ that could pass as FHL's own properties or projects.
 
 - Short, plain, direct sentences. No hype words, no emoji, no exclamation marks.
 - Say the hard truth up front (e.g. development "is not recommended for everyone").
-- **Open decision:** the brand guide was written for Dustin's solo land-buying mailers
-  and says "I, never we". This site is the *company* site, and Dustin's brief uses "we"
-  for FHL. Proposed: the company pages use "we" / "FHL", while Dustin's memo, his story
-  and any "call me" lines use "I". Get Dustin to confirm.
+- **"We" vs "I" (decided):** company pages use "we" / "FHL". Dustin's memo, his story
+  and any "call me" lines use "I". (The brand guide's "I, never we" rule is for his
+  solo land mailers only.)
 - The brand guide says he's described as "Realtor and Chesapeake local" on the
   Chesapeake land mailers. On this site, describe his role only with facts from
   `docs/brief.md` until he gives a site-specific line ([[TODO]]).
@@ -162,16 +162,31 @@ documents that land lives in: survey plats, deed books, field notes, county maps
   interactive pieces (a photo gallery lightbox, a form step indicator) as islands only where needed.
 - **Hosting:** Netlify, auto-deploys from `main`. Build settings are in `netlify.toml`
   (`npm run build`, publish `dist/`, Node 22).
-- **Forms:** Netlify Forms (static HTML forms with `data-netlify="true"` and a honeypot),
-  one form per intake path, each with its own thank-you page. Open question: Dustin's
-  campaign landing pages post to an Airtable automation ("Landing page → Responses + lead
-  alert"). Decide whether site forms should also go to Airtable (Netlify outgoing
-  webhook/function) so every lead lands in one place.
+- **Forms → Airtable (decided).** Every site form POSTs JSON to the Airtable automation
+  **"Website form → Responses + lead alert"** (`wflnRbezD8AXsyxaX`) in the
+  **MAILING ROUTES/ CAMPAIGNS** base (`appFYyqgvckxPOcTN`). It creates a row in
+  **Responses**, tagged so it reads as a website lead, and emails Dustin "A new lead from your
+  website has just put in their info". This is a separate webhook from the mail-campaign
+  one (`Landing page → Responses + lead alert`). Never post site forms to that one.
+  - Webhook URL: `https://hooks.airtable.com/workflows/v1/genericWebhook/appFYyqgvckxPOcTN/wflnRbezD8AXsyxaX/wtrLaCcyr4N2Yr73L`
+  - Payload keys (strings): `form` (exactly one of: `Buy or sell`, `Sell direct`,
+    `Partner / JV`, `Invest interest`, `Careers`, `Monthly memo`, `Contact`), `name`,
+    `phone`, `email`, `contact_method`, `contact_time`, `consent` (`"true"`/`"false"`),
+    `property_address`, `interest`, `asking_price`, `timeline`, `remarks`, `details`
+    (multi-line text holding any answers without their own column), `page`, `page_url`, `submitted_at`
+    (ISO), `source` (`"website"`).
+  - Responses fields added for this: **Website Form** (single select),
+    **Form Details** (long text) and **Source** (formula: `Website` when Website Form
+    is set, otherwise `Mail campaign`).
+  - Keep a honeypot field and client-side validation. Show the thank-you page only after
+    the POST succeeds, and if it fails, show a written error with Dustin's phone number.
+  - Status: built in Airtable as a draft, **not yet on**. It needs one sample POST so
+    Airtable learns the payload, then the script and email steps are wired in and Dustin
+    turns it on.
 - **Newsletter:** needs an email platform (e.g. Mailchimp, Kit, Beehiiv). [[TODO: Dustin
-  to choose]]. Until then, the sign-up form stores contacts via Netlify Forms.
-- **Real estate search:** link out to https://dustinfloyd.howardhanna.com for now.
-  Embedding live MLS search needs an IDX feed approved through Howard Hanna and the MLSs that cover
-  SEVA/NENC/OBX. That's an open question for Dustin to ask his broker.
+  to choose]]. Until then, sign-ups land in Airtable Responses as `Monthly memo`.
+- **Real estate search (decided):** link out to https://dustinfloyd.howardhanna.com.
+  Dustin will add IDX later; build `/search/` so an embed can replace the link.
 - **SEO basics:** a unique title and description on every page, canonical URLs, Open Graph
   images, `sitemap.xml` (@astrojs/sitemap), `robots.txt`, and JSON-LD `RealEstateAgent` /
   `Organization` markup using only facts listed above. Every page has a real `<h1>`.
@@ -190,10 +205,13 @@ documents that land lives in: survey plats, deed books, field notes, county maps
   brand guide's wording is written for property sellers. Write a version for each form
   (buy/sell, JV, careers, newsletter) and have Dustin approve it ([[TODO]]).
 - Link Privacy and Terms pages from every form ([[TODO: Dustin's/attorney's text]]).
-- **Deals to fund:** publicly advertising investment deals, amounts and open spots
-  may be a securities offering. **Have a securities attorney review this before it goes
-  live.** Until then, the page is a gated "register your interest" form with no deal
-  terms shown publicly.
+- **Deals to fund (decided):** `/invest/` is an "I'm interested" form only. Show no
+  deal names, amounts or open spots. How the deals work, in Dustin's words: each deal is
+  its own LLC that owns the property, and investors partner in that company. He says VA
+  LLCs for these deals can have up to 20 members (his statement; don't present it as
+  legal fact on the site). Because investors buy into a company, this is likely a
+  securities matter. Keep deal terms off the public site unless a securities attorney
+  approves.
 - When FHL buys a property for itself, say that Dustin is a licensed real estate
   salesperson (brand guide rule).
 
@@ -243,7 +261,7 @@ Primary navigation: **Who We Are · What We Do · Properties · Invest · Career
 /media/                   Social links, video, press
 /reviews/                 Client reviews (real ones only)
 /partners/                Partners and affiliates (only ones Dustin confirms)
-/free-stuff/              Free swag, stickers, giveaways, the memo (client shop merged in)
+/free-stuff/              Free swag, stickers, giveaways, the memo (Client Shop merged in: decided)
 /mail/                    "Got mail from us?": explains the mailers, links to campaign site
                           and to the sell-direct form
 /contact/                 Phone, email, office, map
@@ -256,8 +274,9 @@ Primary navigation: **Who We Are · What We Do · Properties · Invest · Career
 
 The open list lives here. Strike items through as they arrive.
 
-- [ ] Public email, office address, social links
-- [ ] More photos: properties, developments, Dustin at work, team, land
+- [x] ~~Public email, office address~~ (2026-10-27)
+- [ ] Social links (Dustin sending from his phone)
+- [ ] More photos (Dustin sending from his phone): properties, developments, Dustin at work, team, land
 - [ ] One or two lines per value
 - [ ] Current listings (or confirm "search only" at launch)
 - [ ] Development projects: names, site plans, renderings, status
@@ -270,7 +289,6 @@ The open list lives here. Strike items through as they arrive.
 - [ ] Newsletter platform choice
 - [ ] Consent wording, privacy policy and terms
 - [ ] Securities attorney sign-off before deal amounts are shown
-- [ ] Confirm the voice decision (we vs I)
 - [ ] Confirm the domain: floydhomesandland.com
 
 ## Decision log
@@ -281,8 +299,10 @@ The open list lives here. Strike items through as they arrive.
 | 2026-10-27 | Sitemap as above | Proposed, pending approval |
 | 2026-10-27 | Brand: use FHL Brand Guide tokens, fonts, logos as-is | Decided (Dustin's instruction) |
 | 2026-10-27 | Design concept "the land record" (plat lines, deed covenants, field-notes memo) | Proposed |
-| 2026-10-27 | Forms on Netlify Forms; Airtable routing TBD | Proposed |
-| 2026-10-27 | Real estate search links out to Howard Hanna site; IDX later if approved | Decided (per brief) |
-| 2026-10-27 | Merge "Client shop" into "Free stuff" | Proposed |
-| 2026-10-27 | Deals to fund gated pending legal review | Proposed |
+| 2026-10-27 | Forms post to Airtable (MAILING ROUTES/ CAMPAIGNS → Responses), tagged Website, email alert to Dustin | Decided (Dustin) |
+| 2026-10-27 | Real estate search links out to Howard Hanna site; Dustin adds IDX later | Decided (Dustin) |
+| 2026-10-27 | Merge "Client shop" into "Free stuff" | Decided (Dustin) |
+| 2026-10-27 | Deals to fund: "I'm interested" form only, no deal terms public | Decided (Dustin) |
+| 2026-10-27 | Voice: "we" on company pages, "I" in Dustin's memo/story/call lines | Decided (Dustin) |
+| 2026-10-27 | Sales inquiries show dustinfloyd@howardhanna.com; everything else floydhomesandland@gmail.com | Decided (Dustin) |
 | 2026-10-27 | "Sell direct" is an answer on Get Started's "What brings you here?", aimed at mailer recipients; it leads to the one sell-direct form | Decided (Dustin) |
