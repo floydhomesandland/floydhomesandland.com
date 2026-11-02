@@ -76,7 +76,7 @@ const meta = forms[formKey];
   <button type="submit" class="btn btn--primary submit">{submitLabel}</button>
   <p class="status" role="alert" hidden></p>
   <p class="small muted after">
-    Rather talk? Call or text Dustin at <span class="phone-plain">{site.phone.display}</span>.
+    Rather talk? Call or text Dustin at <a href={`tel:${site.phone.tel}`} class="phone-plain">{site.phone.display}</a>.
   </p>
 </form>
 

@@ -53,7 +53,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
           <li><a href="/contact/" class="top">Contact</a></li>
         </ul>
         <a class="btn btn--light" href="/start/">Get started</a>
-        <p class="small muted">Call or text <span class="phone-plain">{site.phone.display}</span></p>
+        <p class="small muted">Call or text <a href={`tel:${site.phone.tel}`} class="phone-plain">{site.phone.display}</a></p>
       </nav>
     </details>
   </div>

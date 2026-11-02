@@ -27,7 +27,7 @@ const numerals = ['I', 'II', 'III', 'IV', 'V', 'VI'];
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-text">
-        <p class="eyebrow">Southeastern Virginia · Northeastern North Carolina · Outer Banks</p>
+        <p class="eyebrow"><span><span class="nowrap">Southeastern Virginia ·</span> <span class="nowrap">Northeastern North Carolina ·</span> <span class="nowrap">Outer Banks</span></span></p>
         <h1>We sell homes and land. <span class="display-line">Then we help you think bigger.</span></h1>
         <p class="lede">
           Floyd Homes and Land sells first. When a client wants more than a simple sale, we bring
@@ -154,6 +154,12 @@ const numerals = ['I', 'II', 'III', 'IV', 'V', 'VI'];
   .hero-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-md); border-bottom: 4px solid var(--gold); }
   .hero-photo figcaption { display: flex; flex-direction: column; margin-top: 14px; }
   :global(.hero-plat) { position: absolute; width: 140%; max-width: none; left: -32%; top: -9%; z-index: -1; opacity: 0.75; }
+  .nowrap { white-space: nowrap; }
+  /* On phones the photo fills the column, so keep the plat drawing inside the screen. */
+  @media (max-width: 559px) {
+    .hero-photo { width: min(84%, 360px); }
+    :global(.hero-plat) { width: 124%; left: -12%; top: -6%; }
+  }
   .sig { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--green-deep); }
   @media (min-width: 920px) {
     .hero-grid { grid-template-columns: 1.4fr 1fr; }

@@ -64,7 +64,7 @@ const hideMemo = Astro.url.pathname.startsWith('/memo/') || Astro.url.pathname.s
       <Image src={ehoWhite} alt="Equal Housing Opportunity" width={58} height={55} class="eho" />
       <div>
         <p>Real estate sales powered by <strong>{site.brokerage.name}</strong>, <a href={`tel:${site.brokerage.phone.tel}`} class="phone-plain">{site.brokerage.phone.display}</a>.
-          Dustin Floyd, <span class="phone-plain">{site.phone.display}</span>.</p>
+          Dustin Floyd, <a href={`tel:${site.phone.tel}`} class="phone-plain">{site.phone.display}</a>.</p>
         <p>© {year} {site.legalName} All rights reserved.
           {legalLinks.map((l) => <> · <a href={l.href}>{l.label}</a></>)}</p>
       </div>
