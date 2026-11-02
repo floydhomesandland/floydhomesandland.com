@@ -13,6 +13,8 @@ interface Props {
   contact?: 'full' | 'email';
   consentTopic?: string;
   card?: boolean;
+  /** Campaign slug from src/data/campaigns.ts. Tags the lead in Airtable. */
+  campaign?: string;
 }
 const {
   formKey,
@@ -22,6 +24,7 @@ const {
   contact = 'full',
   consentTopic = 'my inquiry',
   card = true,
+  campaign,
 } = Astro.props;
 const meta = forms[formKey];
 ---
@@ -29,7 +32,8 @@ const meta = forms[formKey];
   class:list={['intake', { 'intake--card': card }]}
   data-fhl-form
   data-form={meta.form}
-  data-page={formKey}
+  data-page={campaign ? `offer/${campaign}` : formKey}
+  data-campaign={campaign}
   data-thanks={`/thanks/${formKey}/`}
   data-webhook={site.formWebhook}
   data-phone={site.phone.display}
@@ -59,6 +63,7 @@ const meta = forms[formKey];
   <div class="hp" aria-hidden="true">
     <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
   </div>
+  {campaign && <input type="hidden" name="campaign" value={campaign} />}
 
   <div class="field consent">
     <label class="consent-label">
