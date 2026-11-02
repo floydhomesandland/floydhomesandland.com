@@ -106,7 +106,15 @@ export function initForms() {
         body.set(k, isDetail ? '' : valueOf(form, k));
       });
       body.set('consent', String(!!form.querySelector<HTMLInputElement>('input[name="consent"]')?.checked));
-      body.set('details', collectDetails(form));
+      // Campaign landing pages (/offer/<slug>/) tag the lead. The Airtable script stores
+      // `page` in Responses → Page; the campaign and QR tag also lead Form Details so
+      // they show in the alert email.
+      const campaign = form.querySelector<HTMLInputElement>('input[name="campaign"]')?.value || '';
+      const qrTag = (new URLSearchParams(window.location.search).get('c') || '').trim().slice(0, 100);
+      const tagLines = campaign ? [`Campaign: ${campaign}`, ...(qrTag ? [`QR tag: ${qrTag}`] : [])] : [];
+      body.set('campaign', campaign);
+      body.set('qr_tag', campaign ? qrTag : '');
+      body.set('details', [...tagLines, collectDetails(form)].filter(Boolean).join('\n'));
       body.set('page', form.dataset.page || '');
       body.set('page_url', window.location.href.slice(0, 300));
       body.set('submitted_at', new Date().toISOString());

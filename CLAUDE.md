@@ -285,6 +285,7 @@ Primary navigation: **Who We Are · What We Do · Properties · Invest · Career
                           and to the sell-direct form
 /contact/                 Phone, email, office, map
 /privacy/  /terms/  /accessibility/
+/offer/[slug]/            Campaign landing pages from src/data/campaigns.ts (noindex, not in sitemap)
 /thanks/[form]/           One thank-you page per form
 /404
 ```
@@ -325,3 +326,4 @@ The open list lives here. Strike items through as they arrive.
 | 2026-10-27 | Voice: "we" on company pages, "I" in Dustin's memo/story/call lines | Decided (Dustin) |
 | 2026-10-27 | Sales inquiries show dustinfloyd@howardhanna.com; everything else floydhomesandland@gmail.com | Decided (Dustin) |
 | 2026-10-27 | "Sell direct" is an answer on Get Started's "What brings you here?", aimed at mailer recipients; it leads to the one sell-direct form | Decided (Dustin) |
+| 2026-11-02 | Campaign landing pages at /offer/<slug>/, one entry each in src/data/campaigns.ts; leads go to the website-form webhook tagged page=offer/<slug> + Campaign/QR tag lines in Form Details; noindex by default | Proposed (PR) |

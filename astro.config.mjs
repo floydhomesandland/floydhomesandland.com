@@ -7,8 +7,9 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     sitemap({
-      // Thank-you pages are reached only after a form, so keep them out of search.
-      filter: (page) => !page.includes('/thanks/'),
+      // Thank-you pages are reached only after a form, and campaign pages (/offer/) are
+      // for people holding a mailer, so keep both out of search.
+      filter: (page) => !page.includes('/thanks/') && !page.includes('/offer/'),
     }),
   ],
 });
