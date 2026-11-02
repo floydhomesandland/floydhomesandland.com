@@ -1,0 +1,8 @@
+---
+// Stand-in until Dustin sends real photos. Looks unfinished on purpose.
+interface Props { label: string; ratio?: string }
+const { label, ratio = '4 / 3' } = Astro.props;
+---
+<div class="placeholder-photo" style={`aspect-ratio: ${ratio}`} role="img" aria-label={`Photo needed: ${label}`}>
+  <span>[[TODO: photo]]<br />{label}</span>
+</div>

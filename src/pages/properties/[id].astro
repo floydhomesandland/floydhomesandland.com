@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection('properties');
+  return items.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<Base title={d.title} description={`${d.type} in ${d.location}. ${d.status}. Listed by Floyd Homes and Land.`}>
+  <article>
+    <section class="section">
+      <div class="wrap">
+        <p class="eyebrow">{d.status} · {d.market}</p>
+        <h1>{d.title}</h1>
+        <p class="lede">{d.location}</p>
+        <Image src={d.cover} alt={d.coverAlt} widths={[720, 1200, 1600]} sizes="(min-width: 1200px) 1120px, 100vw" loading="eager" class="cover" />
+      </div>
+    </section>
+    <section class="section">
+      <div class="wrap grid-2 grid-2--wide-left">
+        <div class="prose"><Content /></div>
+        <div>
+          <dl class="facts">
+            <div><dt>Type</dt><dd>{d.type}</dd></div>
+            {d.price && <div><dt>Price</dt><dd>{d.price}</dd></div>}
+            {d.acres && <div><dt>Acres</dt><dd>{d.acres}</dd></div>}
+            {d.beds && <div><dt>Beds</dt><dd>{d.beds}</dd></div>}
+            {d.baths && <div><dt>Baths</dt><dd>{d.baths}</dd></div>}
+          </dl>
+          {d.listingUrl && <a class="btn btn--primary" href={d.listingUrl}>Full listing on Howard Hanna</a>}
+        </div>
+      </div>
+    </section>
+    {d.gallery.length > 0 && (
+      <section class="section">
+        <div class="wrap">
+          <h2>Photos</h2>
+          <ul class="gallery">{d.gallery.map((g) => <li><Image src={g.src} alt={g.alt} widths={[600, 1000]} sizes="(min-width: 720px) 50vw, 100vw" /></li>)}</ul>
+        </div>
+      </section>
+    )}
+  </article>
+  <CtaBand title="Want to see it?" text="Call or text Dustin to set up a showing or ask a question." />
+</Base>
+<style>
+  :global(.cover) { width: 100%; border-radius: var(--radius-md); margin-top: 32px; }
+</style>

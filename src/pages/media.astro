@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../data/site';
+---
+<Base title="Media" description="Follow Floyd Homes and Land on social media.">
+  <PageHeader eyebrow="Media" title="Follow along." lede="Where to find Floyd Homes and Land online." plat={false} />
+  <section class="section">
+    <div class="wrap wrap--narrow">
+      {site.social.length ? (
+        <ul class="ledger">{site.social.map((s) => <li><a class="ledger-link" href={s.href} rel="me noopener"><span class="ledger-title">{s.label}</span><span class="ledger-arrow" aria-hidden="true">→</span></a></li>)}</ul>
+      ) : (
+        <p class="todo">[[TODO: Dustin to send social links (Instagram, Facebook, YouTube, TikTok, LinkedIn), plus any video or press]]</p>
+      )}
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import PlaceholderPhoto from '../../components/PlaceholderPhoto.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+const items = (await getCollection('developments')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Developments" description="Floyd Homes and Land development projects: site plans and renderings.">
+  <PageHeader eyebrow="Developments" title="What the land is becoming." lede="Site plans and renderings of Floyd Homes and Land projects." />
+  <section class="section">
+    <div class="wrap">
+      {items.length ? (
+        <ul class="items">
+          {items.map((p) => (
+            <li>
+              <a class="item" href={`/developments/${p.id}/`}>
+                <Image src={p.data.cover} alt={p.data.coverAlt} widths={[400, 720]} sizes="(min-width: 1080px) 380px, (min-width: 720px) 50vw, 100vw" />
+                <span class="item-meta">{p.data.status}</span>
+                <span class="item-title">{p.data.title}</span>
+                <span class="muted">{p.data.location}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="empty grid-2">
+          <div>
+            <h2>Projects go here.</h2>
+            <p class="todo">[[TODO: Dustin to send development projects: names, locations, status, site plans and renderings]]</p>
+            <p>Have land you're wondering about? <a href="/start/partner/">Tell us about it</a>.</p>
+          </div>
+          <PlaceholderPhoto label="Site plan or rendering" />
+        </div>
+      )}
+    </div>
+  </section>
+  <CtaBand title="Wondering what your land could become?" />
+</Base>

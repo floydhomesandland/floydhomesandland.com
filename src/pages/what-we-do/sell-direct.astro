@@ -1,0 +1,106 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import IntakeForm from '../../components/IntakeForm.astro';
+import Field from '../../components/Field.astro';
+import Choices from '../../components/Choices.astro';
+import { site } from '../../data/site';
+---
+<Base
+  title="Sell Your Land or Home Direct"
+  description="Sell your land or home directly to Floyd Homes and Land. What you gain, what you give up, and when selling direct works or doesn't."
+>
+  <PageHeader
+    eyebrow="Sell direct"
+    title="Sell your land or home straight to us."
+    lede="Selling direct means selling to Floyd Homes and Land instead of listing on the open market. Here's the honest version of when that makes sense."
+  />
+
+  <section class="section letter">
+    <div class="wrap grid-2">
+      <div>
+        <p class="eyebrow">Got a letter from us?</p>
+        <h2>It was from Dustin Floyd.</h2>
+        <p>
+          Floyd Homes and Land sells homes and land across Southeastern Virginia, Northeastern North Carolina
+          and the Outer Banks, and we specialize in land development and investment ourselves. If we sent you
+          a letter, it's because we're interested in your property.
+        </p>
+        <p>
+          The quickest way to talk is to call or text Dustin at <span class="phone-plain">{site.phone.display}</span>,
+          or fill out the form on this page.
+        </p>
+        <a class="text-link" href="/who-we-are/">Read Dustin's story</a>
+      </div>
+      <div class="prose">
+        <h2 class="h3">Selling direct, in two columns</h2>
+        <div class="trade">
+          <div>
+            <h3>What you gain</h3>
+            <ul class="fit-list">
+              <li>One buyer to deal with, and you talk to them directly.</li>
+              <li>No showings or open houses.</li>
+              <li>A conversation about your situation before anything is signed.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>What you give up</h3>
+            <ul class="fit-list fit-list--no">
+              <li>Exposure to every buyer on the open market.</li>
+              <li>The chance of competing offers driving the price up.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="todo">[[TODO: Dustin to confirm or edit these lists, and add any terms FHL offers on direct purchases]]</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div>
+        <h2>When it works</h2>
+        <ul class="fit-list">
+          <li>Speed and certainty matter more to you than the top possible price.</li>
+          <li>The property is hard to market, or needs work you don't want to take on.</li>
+          <li>You'd rather keep the sale private.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>When it doesn't</h2>
+        <ul class="fit-list fit-list--no">
+          <li>Getting the highest price matters most, and you have time to wait for it.</li>
+          <li>Your property is likely to draw several offers on the open market.</li>
+        </ul>
+        <p class="muted">If that's you, we'll say so, and help you list it through Howard Hanna instead.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section form-section" id="form">
+    <div class="wrap grid-2">
+      <div>
+        <p class="eyebrow">Tell us about the property</p>
+        <h2>Start the conversation.</h2>
+        <p class="muted">Fill in what you know and leave the rest blank.</p>
+        <p>Prefer to talk? Call or text <span class="phone-plain">{site.phone.display}</span>.</p>
+      </div>
+      <IntakeForm formKey="sell-direct" title="Your property" submitLabel="Send my property to Dustin" consentTopic="my property">
+        <Choices legend="Did you get a letter from us?" name="got_letter" options={['Yes', 'No']} detail="Got a letter" />
+        <Field label="Property address" name="property_address" required autocomplete="street-address" error="Enter the property address, or the road and county if there is no address." hint="No address yet? The road and county is fine." />
+        <Choices legend="What is it?" name="property_type" options={['Land', 'Home', 'Home with land', 'Other']} detail="Property type" />
+        <Field label="Rough acreage" name="acreage" detail="Acreage" />
+        <Field label="Price you have in mind" name="asking_price" />
+        <Choices legend="When would you like to sell?" name="timeline" options={['As soon as possible', 'In the next 3 months', 'In the next year', 'Just exploring']} />
+        <Field label="Anything else we should know?" name="remarks" multiline />
+      </IntakeForm>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .trade { display: grid; gap: 24px; }
+  @media (min-width: 560px) { .trade { grid-template-columns: 1fr 1fr; } }
+  .h3 { font-size: clamp(1.3rem, 2.4vw, 1.6rem); }
+  .form-section h2 { max-width: 14ch; }
+</style>

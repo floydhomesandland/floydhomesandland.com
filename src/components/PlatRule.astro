@@ -1,0 +1,13 @@
+---
+// Section divider in the plat style: dashed line between two gold pins.
+---
+<div class="plat-rule wrap" aria-hidden="true"><span></span></div>
+<style>
+  .plat-rule { display: flex; align-items: center; height: 0; position: relative; }
+  .plat-rule span { flex: 1; height: 0; border-top: 1.5px dashed rgba(14, 58, 50, 0.35); position: relative; }
+  .plat-rule span::before, .plat-rule span::after {
+    content: ''; position: absolute; top: -6px; width: 10px; height: 10px; background: var(--gold); transform: rotate(45deg);
+  }
+  .plat-rule span::before { left: -5px; }
+  .plat-rule span::after { right: -5px; }
+</style>

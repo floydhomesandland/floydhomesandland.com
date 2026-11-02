@@ -1,0 +1,30 @@
+---
+// Decorative survey plat: dashed boundary, gold corner pins, bearing labels.
+// The bearings and acreage are made up on purpose and must never describe a real parcel.
+interface Props { class?: string; label?: string }
+const { class: cls, label = '± 4.62 AC' } = Astro.props;
+---
+<svg class={cls} viewBox="0 0 400 320" aria-hidden="true" focusable="false">
+  <g fill="none" stroke="#0E3A32" stroke-opacity="0.35" stroke-width="1.5">
+    <path d="M40 70 L300 30 L360 230 L90 290 Z" stroke-dasharray="10 7" />
+    <path d="M40 70 L300 30 L360 230 L90 290 Z" stroke-opacity="0.12" stroke-width="14" />
+    <path d="M300 30 L250 175 L90 290" stroke-dasharray="3 6" stroke-opacity="0.25" />
+  </g>
+  <g fill="#B88128">
+    <rect x="34" y="64" width="12" height="12" transform="rotate(45 40 70)" />
+    <rect x="294" y="24" width="12" height="12" transform="rotate(45 300 30)" />
+    <rect x="354" y="224" width="12" height="12" transform="rotate(45 360 230)" />
+    <rect x="84" y="284" width="12" height="12" transform="rotate(45 90 290)" />
+  </g>
+  <g fill="#4B5B55" font-family="Montserrat, sans-serif" font-size="11" font-weight="600" letter-spacing="1.5">
+    <text x="130" y="40" transform="rotate(-8.7 130 40)">N 81°15' E</text>
+    <text x="338" y="110" transform="rotate(73 338 110)">S 16°42' E</text>
+    <text x="180" y="282" transform="rotate(-12.5 180 282)">S 77°28' W</text>
+    <text x="38" y="190" transform="rotate(-78.7 38 190)">N 10°19' W</text>
+  </g>
+  <text x="190" y="165" text-anchor="middle" fill="#0E3A32" fill-opacity="0.55" font-family="Zilla Slab, serif" font-size="22" font-weight="700">{label}</text>
+  <g stroke="#0E3A32" stroke-opacity="0.4" stroke-width="1.2" fill="none">
+    <path d="M372 34 v30 M366 46 l6 -12 l6 12" />
+  </g>
+  <text x="372" y="78" text-anchor="middle" fill="#4B5B55" font-family="Montserrat, sans-serif" font-size="10" font-weight="600">N</text>
+</svg>

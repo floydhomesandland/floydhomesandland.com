@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import PlaceholderPhoto from '../components/PlaceholderPhoto.astro';
+
+// From Dustin's brief. Items are ideas until he confirms what's stocked.
+const swag = ['Coolers', 'Hats', 'Sweatshirts', 'Stickers', 'Calendars', 'Tumblers', 'Gallon jugs'];
+---
+<Base title="Free Stuff" description="Free Floyd Homes and Land swag for clients, stickers, giveaways and the monthly memo.">
+  <PageHeader eyebrow="Free stuff" title="Pick your pieces." lede="Branded FHL swag for our clients, plus stickers, giveaways and the monthly memo." />
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">The client shop</p>
+      <h2>FHL gear.</h2>
+      <p class="todo">[[TODO: Dustin to confirm the swag list, photos, who can claim it (clients only?) and how (ship or pick up)]]</p>
+      <ul class="items swag">
+        {swag.map((s) => <li><PlaceholderPhoto label={s} ratio="1 / 1" /><p class="item-title">{s}</p></li>)}
+      </ul>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap grid-2">
+      <div>
+        <h2>Stickers and giveaways</h2>
+        <p class="todo">[[TODO: how to get stickers, and any current affiliate giveaways]]</p>
+      </div>
+      <div>
+        <h2>The monthly memo</h2>
+        <p>Free, about once a month. <a href="/memo/">Sign up</a>.</p>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .swag { margin-top: 32px; }
+  .swag .item-title { margin-top: 12px; }
+  @media (min-width: 1080px) { .swag { grid-template-columns: repeat(4, 1fr); } }
+</style>

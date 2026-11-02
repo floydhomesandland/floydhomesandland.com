@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CtaBand from '../../components/CtaBand.astro';
+
+const who = [
+  { n: '01', title: 'Any agent', desc: '' },
+  { n: '02', title: 'Any college grad', desc: '' },
+  { n: '03', title: 'Anyone with an idea', desc: 'That just needs a home to take root in and flourish.' },
+  { n: '04', title: 'Anyone who just wants a damn good job', desc: '' },
+];
+---
+<Base title="Careers" description="Careers at Floyd Homes and Land: for agents, college grads, people with ideas, and anyone who wants a damn good job.">
+  <PageHeader eyebrow="Careers" title="More than a job." lede="A place to land that's more than a job, and a limitless umbrella to fit your entire life into." />
+  <section class="section">
+    <div class="wrap grid-2 grid-2--wide-left">
+      <div>
+        <h2>This is for</h2>
+        <ul class="ledger">
+          {who.map((w) => (
+            <li><div class="ledger-link">
+              <span class="ledger-num">{w.n}</span>
+              <span class="ledger-title">{w.title}</span>
+              {w.desc && <span class="ledger-desc">{w.desc}</span>}
+            </div></li>
+          ))}
+        </ul>
+      </div>
+      <blockquote class="pull">
+        <p>“If you're someone looking for a place to land that's more than a job, but is a limitless umbrella to fit your entire life into, let's go get coffee or lunch.”</p>
+        <footer class="sig">Dustin Floyd</footer>
+      </blockquote>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <h2>Open roles</h2>
+      <p class="todo">[[TODO: Dustin to list open roles, or confirm this stays an open invitation only]]</p>
+      <div class="btn-row"><a class="btn btn--primary" href="/careers/apply/">Tell us about yourself</a></div>
+    </div>
+  </section>
+  <CtaBand title="Let's go get coffee or lunch." text="Tell us about yourself and what you'd want to build here." />
+</Base>
+<style>
+  .pull { margin: 0; align-self: center; }
+  .pull p { font-family: var(--font-display); font-weight: 500; font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.2; color: var(--green-deep); }
+  .sig { margin-top: 16px; font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--green-deep); }
+</style>

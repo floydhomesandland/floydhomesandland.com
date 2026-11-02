@@ -1,0 +1,22 @@
+---
+import { site } from '../data/site';
+interface Props { title?: string; text?: string }
+const {
+  title = 'Think big. Start with a call.',
+  text = 'Buying, selling, or wondering what your land could become. Call or text Dustin, or tell us what brings you here.',
+} = Astro.props;
+---
+<section class="cta on-dark topo">
+  <div class="wrap">
+    <h2>{title}</h2>
+    <p class="muted">{text}</p>
+    <div class="btn-row">
+      <a class="btn btn--primary" href={`tel:${site.phone.tel}`}>Call {site.phone.display}</a>
+      <a class="btn btn--ghost" href="/start/">Get started</a>
+    </div>
+  </div>
+</section>
+<style>
+  .cta { padding-block: clamp(56px, 9vw, 104px); overflow: hidden; }
+  .cta h2 { font-size: clamp(2rem, 5vw, 3.2rem); max-width: 18ch; }
+</style>

@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import IntakeForm from '../../components/IntakeForm.astro';
+
+const memos = (await getCollection('memos')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', timeZone: 'UTC' });
+---
+<Base title="The Monthly Memo" description="Sign up for the Floyd Homes and Land monthly memo: updates, memos and newsletters, about once a month.">
+  <PageHeader eyebrow="The monthly memo" title="One letter a month." lede="Updates, memos and newsletters from Floyd Homes and Land as they come out, typically once a month." plat={false} />
+  <section class="section">
+    <div class="wrap grid-2">
+      <div>
+        <h2>Past memos</h2>
+        {memos.length ? (
+          <ul class="ledger">
+            {memos.map((m) => (
+              <li>
+                <a class="ledger-link" href={`/memo/${m.id}/`}>
+                  <span class="ledger-num small">{fmt(m.data.date)}</span>
+                  <span class="ledger-title">{m.data.title}</span>
+                  <span class="ledger-arrow" aria-hidden="true">→</span>
+                  <span class="ledger-desc">{m.data.summary}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="muted">The first memo hasn't gone out yet. Sign up and it'll be in your inbox.</p>
+        )}
+      </div>
+      <IntakeForm formKey="memo" contact="email" title="Sign up" submitLabel="Sign me up" consentTopic="the monthly memo and FHL updates" />
+    </div>
+  </section>
+</Base>
