@@ -178,6 +178,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 0; }
 .on-dark .text-link { color: var(--on-dark); }
 
 .phone-plain { font-weight: 700; white-space: nowrap; }
+a.phone-plain { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.15em; }
 
 /* Ledger list: rule-separated rows, the site's alternative to boxes */
 .ledger { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--line); }

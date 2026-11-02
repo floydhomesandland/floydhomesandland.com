@@ -27,13 +27,13 @@ import { site } from '../../data/site';
           a letter, it's because we're interested in your property.
         </p>
         <p>
-          The quickest way to talk is to call or text Dustin at <span class="phone-plain">{site.phone.display}</span>,
+          The quickest way to talk is to call or text Dustin at <a href={`tel:${site.phone.tel}`} class="phone-plain">{site.phone.display}</a>,
           or fill out the form on this page.
         </p>
         <a class="text-link" href="/who-we-are/">Read Dustin's story</a>
       </div>
       <div class="prose">
-        <h2 class="h3">Selling direct, in two columns</h2>
+        <h2 class="h3">Selling direct: what you gain and what you give up</h2>
         <div class="trade">
           <div>
             <h3>What you gain</h3>
@@ -83,7 +83,7 @@ import { site } from '../../data/site';
         <p class="eyebrow">Tell us about the property</p>
         <h2>Start the conversation.</h2>
         <p class="muted">Fill in what you know and leave the rest blank.</p>
-        <p>Prefer to talk? Call or text <span class="phone-plain">{site.phone.display}</span>.</p>
+        <p>Prefer to talk? Call or text <a href={`tel:${site.phone.tel}`} class="phone-plain">{site.phone.display}</a>.</p>
       </div>
       <IntakeForm formKey="sell-direct" title="Your property" submitLabel="Send my property to Dustin" consentTopic="my property">
         <Choices legend="Did you get a letter from us?" name="got_letter" options={['Yes', 'No']} detail="Got a letter" />
